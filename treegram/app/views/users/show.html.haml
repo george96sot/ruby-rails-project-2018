@@ -1,0 +1,24 @@
+.row
+  =link_to 'users', all_users_path(@user), class: ['btn', 'btn-success']
+  =link_to 'posts', posts_path(@user), class: ['btn', 'btn-success']
+  =link_to 'followers', followers_path(@user),class: ['btn', 'btn-success']
+  =link_to 'following', following_path(@user),class: ['btn', 'btn-success']
+.row.top_row
+  .col-sm-6.user_att
+    %h2= @user.email
+    - if @user.avatar_file_name
+      = image_tag @user.avatar.url(:thumb)
+  .col-sm-6
+    = link_to 'Logout', log_out_path, class: ['btn', 'btn-danger', 'logout_btn']
+  .row
+    = link_to 'Add Photo', new_user_photo_path(@user), class: ['btn', 'btn-success', 'add_photo_btn']
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
