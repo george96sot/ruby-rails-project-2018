@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
-  get '/' => 'home#index'
+  get '/' => 'home#index2'
   resources :users do
     resources :photos
   end
 
   resources :tags, only: [:create, :destroy]
+
+  get '/register' => 'home#register'
+  get '/login' => 'home#login'
+
   get '/log-in' => "sessions#new"
   post '/log-in' => "sessions#create"
   get '/log-out' => "sessions#destroy", as: :log_out
