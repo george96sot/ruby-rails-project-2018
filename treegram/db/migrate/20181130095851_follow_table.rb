@@ -1,8 +1,8 @@
 class FollowTable < ActiveRecord::Migration
   def change
-    create_table :follow do |follows|
-      follows.column :follower_id, :integer
-      follows.column :following_id, :integer
+    create_table :follows do |f|
+      f.column :follower_id, :integer
+      f.column :following_id, :integer
     end
   end
 end
