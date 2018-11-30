@@ -29,6 +29,7 @@ class UsersController < ApplicationController
 
   def all_users
     @users = User.all
+    @user = User.find(params[:id])
     @tag = Tag.new
   end
 

@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319191254) do
+ActiveRecord::Schema.define(version: 20181130095851) do
+
+  create_table "follow", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "following_id"
+  end
 
   create_table "photos", force: :cascade do |t|
     t.integer  "user_id"
