@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   get '/users/:id/followers' => 'users#followers', as: 'followers'
   get '/users/:id/following' => 'users#following', as: 'following'
 
+  post '/users/:id/all_users/:following_id' => 'follow#createFollow', as: 'follow'
+
 end
