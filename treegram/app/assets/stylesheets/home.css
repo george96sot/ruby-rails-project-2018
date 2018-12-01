@@ -1,10 +1,13 @@
 html{
   min-width: 100vh;
   min-height: 100vh;
+  font-family: "Times New Roman", Times, serif;
+
 }
 body{
   min-width: 100vh;
   min-height: 100vh;
+  background-color: #fafafa;
 }
 
 body#LoginForm{ background-image:url("home-background.jpg"); background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;}

@@ -30,12 +30,22 @@ class UsersController < ApplicationController
   def all_users
     @users = User.all
     @user = User.find(params[:id])
-    @tag = Tag.new
+    begin
+      @followers = Follow.where(following_id:params[:id])
+    rescue ActiveRecord::RecordNotFound => e1
+      @followers = []
+    end
+    begin
+      @following = Follow.where(follower_id:params[:id])
+    rescue ActiveRecord::RecordNotFound => e2
+      @following = []
+    end
   end
 
   def posts
     @users = User.all
     @user = User.find(params[:id])
+    @comments = Comment.where(:image_id => { $in => @user.photos.map{|photo| photo.id} })
     @tag = Tag.new
   end
 

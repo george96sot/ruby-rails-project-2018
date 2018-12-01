@@ -1,16 +1,37 @@
-<h1>Posts</h1>
-<h2>#{@user.email}</h2>
-- if @user.avatar_file_name
-  = image_tag @user.avatar.url(:thumb)
-<br>
-.row
-  - @user.photos.each  do |photo|
-    .well.col-sm-4
-      %h5= "#{photo.title}"
-      = image_tag photo.image.url(:medium)
-      = form_for @tag do |f|
-        = f.hidden_field :photo_id, value: photo.id
-        = f.collection_select :user_id, @users, :id, :email
-        = f.submit "Tag User"
-      - photo.tags.each do |tag|
-        = tag.user.email
+%link{rel: "stylesheet", href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css", integrity: "sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r", crossorigin: "anonymous"}
+.container-fluid.posts-content
+  .row
+    .col-lg-11
+      =link_to 'Home', user_path(@user), class: ['btn', 'btn-primary']
+      =link_to 'Users', all_users_path(@user), class: ['btn', 'btn-primary']
+      =link_to 'Posts', posts_path(@user), class: ['btn', 'btn-primary']
+    =link_to 'Logout', log_out_path, class: ['btn', 'btn-danger', 'logout_btn']
+
+  %br/
+  <h4 id="user-cards-title">My Posts</h4>
+  =link_to 'Add Photo', new_user_photo_path(@user), class: ['btn', 'btn-success', 'add_photo_btn']
+
+  .container.posts-images-content
+    .row
+      - @user.photos.each  do |photo|
+        .posts-image.col-lg-3
+          %strong= "#{photo.title}"
+          <br>
+          %span= "#{photo.created_at.strftime("%d-%m-%Y , %H:%M:%S")}"
+          <br>
+          = image_tag photo.image.url(:medium)
+          <br>
+          <br>
+          -if photo.tags.length>0
+            .row
+              -photo.tags.each do |tag|
+                .col-lg-3
+                  %p{:id => "posts-tag-email"} #{tag.user.email}
+
+          <strong>Comments</strong>
+
+
+          = form_for @tag do |f|
+            = f.hidden_field :photo_id, value: photo.id
+            = f.collection_select :user_id, @users, :id, :email
+            = f.submit "Tag User"

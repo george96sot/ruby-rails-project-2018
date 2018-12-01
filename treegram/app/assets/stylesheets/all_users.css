@@ -1,0 +1,28 @@
+.all_users-content{
+  padding:40px 40px 40px 40px;
+  margin-top:10px;
+}
+.users-cards-content{
+  width: auto;
+  text-align: center;
+}
+.user-cards-body{
+  text-align: center;
+  padding:10px 20px 20px 20px;
+  color:rgb(14, 69, 109);
+}
+.users-cards{
+  width:auto;
+  box-shadow: 1px 1px 20px 0px #fafafa;
+  margin-bottom:10px;
+}
+#user-cards-title{
+  text-align: left;
+  padding-top:10px;
+  color:rgb(14, 69, 109);
+}
+.image-avatar{
+  width:120px;
+  min-height:120px;
+  border-radius: 10%;
+}

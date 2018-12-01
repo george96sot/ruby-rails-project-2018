@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181130130058) do
+ActiveRecord::Schema.define(version: 20181201173120) do
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "image_id"
+    t.string  "comment"
+  end
 
   create_table "follows", force: :cascade do |t|
     t.integer "follower_id"
@@ -34,8 +40,6 @@ ActiveRecord::Schema.define(version: 20181130130058) do
     t.integer "user_id"
     t.integer "photo_id"
   end
-
-
 
   create_table "users", force: :cascade do |t|
     t.string   "email"

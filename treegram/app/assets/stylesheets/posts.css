@@ -1,0 +1,23 @@
+#posts-tag-email{
+  color:rgb(14, 69, 109);
+}
+.posts-image{
+  padding:20px 20px 20px 20px;
+  margin-left:20px;
+  margin-top:20px;
+  min-height: 400px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 20px 0px #b3d1da;
+  width: auto;
+}
+.posts-images-content{
+  background: #fbfbfb;
+}
+
+.posts-image span{
+  font-style:italic;
+}
+.posts-content{
+  padding:40px 40px 40px 40px;
+  margin-top:10px;
+}

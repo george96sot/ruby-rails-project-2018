@@ -19,5 +19,6 @@ Rails.application.routes.draw do
   get '/users/:id/following' => 'users#following', as: 'following'
 
   post '/users/:id/all_users/:following_id' => 'follow#createFollow', as: 'follow'
+  post '/users/:id/posts/:image_id/:comment' => 'comment#createComment', as: 'comment'
 
 end
