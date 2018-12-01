@@ -29,6 +29,22 @@
                   %p{:id => "posts-tag-email"} #{tag.user.email}
 
           <strong>Comments</strong>
+          -#---------------------------------------------
+          -if @comments
+            - @comments.each do |c|
+              - if photo.id == c.image_id
+                <p>#{c.comment}</p>
+                - @users.each do |user|
+                  - if user.id == c.user_id
+                    <h5>by user: #{user.email}</h6>
+          = form_for Comment.new(), :url => comment_path(:image_id => photo.id),:html => {:multipart => true}  do |form|
+            = form.text_field :comment
+            = form.submit 'add comment'
+          <br>
+          <br>
+          <br>
+          -#---------------------------------------------
+
 
 
           = form_for @tag do |f|
