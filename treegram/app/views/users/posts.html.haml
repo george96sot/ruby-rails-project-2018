@@ -8,46 +8,52 @@
     =link_to 'Logout', log_out_path, class: ['btn', 'btn-danger', 'logout_btn']
 
   %br/
-  <h4 id="user-cards-title">My Posts</h4>
-  =link_to 'Add Photo', new_user_photo_path(@user), class: ['btn', 'btn-success', 'add_photo_btn']
 
-  .container.posts-images-content
+  <h4 id="user-cards-title">All Posts</h4>
+  .container-fluid.posts-images-content
     .row
-      - @user.photos.each  do |photo|
-        .posts-image.col-lg-3
-          %strong= "#{photo.title}"
-          <br>
-          %span= "#{photo.created_at.strftime("%d-%m-%Y , %H:%M:%S")}"
-          <br>
-          = image_tag photo.image.url(:medium)
-          <br>
-          <br>
-          -if photo.tags.length>0
-            .row
+      -@users.each do |user|
+        -user.photos.each  do |photo|
+          .col-md-3.posts-image
+            %strong= "#{photo.title}"
+            <br>
+            %span= "#{photo.created_at.strftime("%d-%m-%Y , %H:%M:%S")}"
+            <br>
+            = image_tag photo.image.url(:medium)
+            <br>
+            <br>
+            <strong>Tags :</strong>
+            -if photo.tags.length>0
               -photo.tags.each do |tag|
-                .col-lg-3
-                  %p{:id => "posts-tag-email"} #{tag.user.email}
-
-          <strong>Comments</strong>
-          -#---------------------------------------------
-          -if @comments
-            - @comments.each do |c|
-              - if photo.id == c.image_id
-                <p>#{c.comment}</p>
-                - @users.each do |user|
-                  - if user.id == c.user_id
-                    <h5>by user: #{user.email}</h6>
-          = form_for Comment.new(), :url => comment_path(:image_id => photo.id),:html => {:multipart => true}  do |form|
-            = form.text_field :comment
-            = form.submit 'add comment'
-          <br>
-          <br>
-          <br>
-          -#---------------------------------------------
-
-
-
-          = form_for @tag do |f|
-            = f.hidden_field :photo_id, value: photo.id
-            = f.collection_select :user_id, @users, :id, :email
-            = f.submit "Tag User"
+                %span{:id => "posts-tag-email"} #{tag.user.email}
+            <br>
+            <br>
+            = form_for @tag do |f|
+              = f.hidden_field :photo_id, value: photo.id
+              = f.collection_select :user_id, @users, :id, :email
+              <br>
+              <br>
+              = f.submit 'Add Tag',:class => "btn btn-primary small btn-xs"
+            <hr>
+            -#---------------------------------------------
+            -if @comments.select{ |comment| comment.image_id == photo.id}.length >0
+              <ul class="list-posts">
+              - @comments.each do |c|
+                <li>
+                - if photo.id == c.image_id
+                  .row
+                    .col-lg-2
+                      = image_tag @users.select{|user| user.id == c.user_id}[0].avatar.url(:thumb), :class => "image-avatar-posts"
+                    .col-lg-10
+                      <label>#{@users.select{|user| user.id == c.user_id}[0].email}</label>
+                      <p>#{c.comment}</p>
+                  <hr>
+                </li>
+              </ul>
+            = form_for Comment.new(), :url => comment_path(:image_id => photo.id),:html => {:multipart => true}  do |form|
+              = form.text_field :comment
+              <br>
+              <br>
+              = form.submit 'Add Comment',:class => "btn btn-primary small btn-sm", :placeholder => "Type a Comment..."
+            <br>
+  %br/

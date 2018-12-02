@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   def show
     @users = User.all
     @user = User.find(params[:id])
+    @comments = Comment.all
     @tag = Tag.new
   end
 

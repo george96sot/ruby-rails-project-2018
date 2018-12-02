@@ -2,10 +2,7 @@ class CommentsController < ApplicationController
 
   def createComment
 
-    print params[:comment]
-    print "   looooooooooooooool     "
-
-    @comment = Comment.create("image_id" => params[:image_id], "user_id" => params[:id], "comment" => params[:comment])
+    @comment = Comment.create("image_id" => params[:image_id], "user_id" => params[:id], "comment" => params[:comment][:comment])
     if @comment.save
       redirect_to user_path(User.find(params[:id]))
       flash[:notice]= "You have successfully added a Comment."
