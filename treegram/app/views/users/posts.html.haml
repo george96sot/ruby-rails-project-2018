@@ -14,7 +14,7 @@
     .row
       -@users.each do |user|
         -user.photos.each  do |photo|
-          .col-md-3.posts-image
+          .col-md-2.posts-image
             %strong= "#{photo.title}"
             <br>
             %span= "#{photo.created_at.strftime("%d-%m-%Y , %H:%M:%S")}"
@@ -51,9 +51,9 @@
                 </li>
               </ul>
             = form_for Comment.new(), :url => comment_path(:image_id => photo.id),:html => {:multipart => true}  do |form|
-              = form.text_field :comment
+              = form.text_field :comment, placeholder:"Type a Comment..."
               <br>
               <br>
-              = form.submit 'Add Comment',:class => "btn btn-primary small btn-sm", :placeholder => "Type a Comment..."
+              = form.submit 'Send',:class => "btn btn-primary small btn-sm"
             <br>
   %br/
