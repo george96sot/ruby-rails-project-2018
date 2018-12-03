@@ -19,7 +19,7 @@
 
   .container-fluid.posts-images-content
     .row
-      - @user.photos.each  do |photo|
+      - @user.photos.sort{ |a, b| b.created_at.strftime("%s") <=> a.created_at.strftime("%s") }.each  do |photo|
         .col-md-3.posts-image
           -if @user.id == photo.user_id
             .text-right

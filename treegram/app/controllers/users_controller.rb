@@ -46,8 +46,7 @@ class UsersController < ApplicationController
   def posts
     @users = User.all
     @user = User.find(params[:id])
-    # o users_controller den exei prosvasi sto :image_id
-    #@comments = Comment.where(:image_id => { $in => @user.photos.map{|photo| photo.id} })
+    @photos= Photo.all
     @comments = Comment.all
     @tag = Tag.new
   end
