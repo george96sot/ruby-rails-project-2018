@@ -9,7 +9,7 @@ body{
   min-height: 100vh;
   background-color: #fafafa;
 }
-
+/*
 body#LoginForm{ background-image:url("home-background.jpg"); background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;}
 
 .form-heading { color:#fff; font-size:23px;}
@@ -64,4 +64,4 @@ body#LoginForm{ background-image:url("home-background.jpg"); background-repeat:n
   background: #ff9900 none repeat scroll 0 0;
 }
 .back { text-align: left; margin-top:10px;}
-.back a {color: #444444; font-size: 13px;text-decoration: none;}
+.back a {color: #444444; font-size: 13px;text-decoration: none;} */

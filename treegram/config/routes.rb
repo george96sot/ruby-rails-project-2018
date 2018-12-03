@@ -6,8 +6,10 @@ Rails.application.routes.draw do
 
   resources :tags, only: [:create, :destroy]
 
-  get '/register' => 'home#register'
-  get '/login' => 'home#login'
+  # get '/register' => 'home#register'
+  # get '/login' => 'home#login'
+  # get '/users/:id/followers' => 'users#followers', as: 'followers'
+  # get '/users/:id/following' => 'users#following', as: 'following'
 
   get '/log-in' => "sessions#new"
   post '/log-in' => "sessions#create"
@@ -15,8 +17,7 @@ Rails.application.routes.draw do
 
   get '/users/:id/all_users' => 'users#all_users', as: 'all_users'
   get '/users/:id/posts' => 'users#posts', as: 'posts'
-  get '/users/:id/followers' => 'users#followers', as: 'followers'
-  get '/users/:id/following' => 'users#following', as: 'following'
+
 
   post '/users/:id/all_users/:following_id' => 'follow#createFollow', as: 'follow'
   post '/users/:id/posts/:image_id' => 'comments#createComment', as: 'comment'
