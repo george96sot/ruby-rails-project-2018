@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   post '/users/:id/all_users/:following_id' => 'follow#createFollow', as: 'follow'
   post '/users/:id/posts/:image_id' => 'comments#createComment', as: 'comment'
+  get '/users/:id/posts/:image_id/delete' => 'photos#delete' , as: 'delete_photo'
 
 
 end

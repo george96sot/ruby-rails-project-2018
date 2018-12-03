@@ -21,6 +21,9 @@
     .row
       - @user.photos.each  do |photo|
         .col-md-3.posts-image
+          -if @user.id == photo.user_id
+            .text-right
+              =link_to 'delete', delete_photo_path(:id => @user.id, :image_id => photo.id), class: ['btn','btn-sm', 'btn-danger']
           %strong= "#{photo.title}"
           <br>
           %span= "#{photo.created_at.strftime("%d-%m-%Y , %H:%M:%S")}"
@@ -44,8 +47,9 @@
           -if @comments.select{ |comment| comment.image_id == photo.id}.length >0
             <ul class="list-posts">
             - @comments.each do |c|
-              <li>
+
               - if photo.id == c.image_id
+                <li>
                 .row
                   .col-lg-2
                     = image_tag @users.select{|user| user.id == c.user_id}[0].avatar.url(:thumb), :class => "image-avatar-posts"
@@ -53,10 +57,10 @@
                     <label>#{@users.select{|user| user.id == c.user_id}[0].email}</label>
                     <p>#{c.comment}</p>
                 <hr>
-              </li>
+                </li>
             </ul>
           = form_for Comment.new(), :url => comment_path(:image_id => photo.id),:html => {:multipart => true}  do |form|
-            = form.text_field :comment
+            = form.text_field :comment, placeholder:"Type a Comment..."
             <br>
             <br>
             = form.submit 'Add Comment',:class => "btn btn-primary small btn-sm", :placeholder => "Type a Comment..."
