@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get '/users/:id/all_users' => 'users#all_users', as: 'all_users'
   get '/users/:id/posts' => 'users#posts', as: 'posts'
 
+  get '/users/:id/comments/:image_id' => 'comments#find'
 
   post '/users/:id/all_users/:following_id' => 'follow#createFollow', as: 'follow'
   post '/users/:id/posts/:image_id' => 'comments#createComment', as: 'comment'

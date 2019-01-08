@@ -24,6 +24,10 @@ class UsersController < ApplicationController
   def show
     @users = User.all
     @user = User.find(params[:id])
+
+    @following = Follow.where(follower_id:params[:id]).pluck(:following_id)
+    @usersFollowing = User.where(id: @following ).select { |u| u.photos.length > 0 }
+
     @comments = Comment.all
     @tag = Tag.new
   end

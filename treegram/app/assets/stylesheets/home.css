@@ -9,6 +9,15 @@ body{
   min-height: 100vh;
   background-color: #fafafa;
 }
+#commentsInfo {
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ background: lightyellow;
+ border:1px solid black;
+ padding:50px;
+}
 /*
 body#LoginForm{ background-image:url("home-background.jpg"); background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;}
 

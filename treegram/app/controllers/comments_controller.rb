@@ -10,6 +10,18 @@ class CommentsController < ApplicationController
   end
 
 
+  def find
+    puts params[:image_id]
+    @imagePosts = Comment.where(image_id:params[:image_id])
+    @users = User.all
+    @user = User.find(params[:id])
+    @photo = Photo.find(params[:image_id])
+    @tag = Tag.new
+    render(:partial => 'show', :locals => { :imagePosts => @imagePosts, :users => @users, :photo => @photo, :tag => @tag }) if request.xhr?
+  end
+
+
+
 
 
 

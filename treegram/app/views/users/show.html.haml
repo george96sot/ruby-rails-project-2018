@@ -1,4 +1,85 @@
 %link{rel: "stylesheet", href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css", integrity: "sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r", crossorigin: "anonymous"}
+:javascript
+  $(document).ready(function() {
+  var CommentPopUp = {
+    setup: function(imageId) {
+    // add hidden 'div' to end of page to display popup:
+    var popupDiv = $(`<div id="commentsInfo"></div>`);
+    popupDiv.hide().appendTo($('body'));
+    }
+    ,getCommentsInfo: function(userId,imageId) {
+    $.ajax({type: 'GET',
+    url: `/users/${userId}/comments/${imageId}`,
+    timeout: 5000,
+    success: CommentPopUp.showCommentsInfo,
+    error: function(xhrObj, textStatus, exception) { alert('Error!'); }
+    // 'success' and 'error' functions will be passed 3 args
+    });
+    return(false);
+  },
+  showCommentsInfo: function(data, requestStatus, xhrObject) {
+    console.log(data)
+    var oneFourth = Math.ceil($(window).width() / 4)
+    $(`#commentsInfo`).html(data).show();
+    // make the Close link in the hidden element work
+    $('#closeLink').click(CommentPopUp.hideCommentsInfo);
+    return(false); // prevent default link action
+    }
+    ,hideCommentsInfo: function() {
+    $('#commentsInfo').hide();
+    return(false);
+    }
+  };
+
+    var startSlideShow = undefined
+    $(".image-box").on({
+        mouseenter : function() {
+          var image, imageCounter = 0, imageCache = [];
+          var userId = $(this).attr('userid')
+          var userImages = $("#slides"+$(this).attr('userid')).children("img").toArray()
+          $(userImages).each(function() {
+          image = new Image();
+          image.src = $(this).attr("src");
+          image.title = $(this).attr("alt");
+          image.imageId = $(this).attr("imageId")
+
+          $(`#slide${userId}`).on('click', function(e) {
+            CommentPopUp.setup($(`#slide${userId}`).attr('imageId'))
+            CommentPopUp.getCommentsInfo(userId,$(`#slide${userId}`).attr('imageId'))
+            clearInterval(startSlideShow);
+            return false
+          })
+
+          imageCache[imageCounter] = image;
+          imageCounter++;
+          });
+          // start slide show
+          imageCounter = 0;
+          var nextImage;
+          if (imageCache.length > 0) {
+            startSlideShow = setInterval(
+              function () {
+                $(`#caption${userId}`).fadeOut(1000);
+                $(`#slide${userId}`).fadeOut(1000, function() {
+                  imageCounter = (imageCounter + 1) % imageCache.length;
+                  nextImage = imageCache[imageCounter];
+                  $(`#slide${userId}`).attr("src", nextImage.src).fadeIn(1000);
+                  $(`#caption${userId}`).text(nextImage.title).fadeIn(1000);
+                  $(`#slide${userId}`).attr("imageId", nextImage.imageId);
+                  } );
+              },
+            3000);
+          }
+        },
+        mouseleave: function () {
+          if(startSlideShow) {
+            clearInterval(startSlideShow);
+          }
+        },
+    })
+  });
+
+
 .container-fluid.all_users-content
   .row
     .col-lg-11
@@ -65,3 +146,27 @@
             <br>
             = form.submit 'Add Comment',:class => "btn btn-primary small btn-sm", :placeholder => "Type a Comment..."
           <br>
+  %br/
+
+
+  <h4 id="user-cards-title">Friend Posts</h4>
+
+  .container-fluid.posts-images-content
+    .row
+    - @usersFollowing.each do |user|
+      .col-md-3{ :class => "image-box", :userId => user.id}
+        %h4= "#{user.email}"
+        -user.photos.sort{ |a, b| b.created_at.strftime("%s") <=> a.created_at.strftime("%s") }.take(1).each do |photo|
+          %strong{:id => "caption#{user.id}"} #{photo.title}
+          <br>
+          %span= "#{photo.created_at.strftime("%d-%m-%Y , %H:%M:%S")}"
+          <br>
+          = image_tag photo.image.url(:medium), id:"slide#{user.id}", imageId:"#{photo.id}"
+
+        .div{ :id => "slides#{user.id}", :style => "display: none;" }
+          -user.photos.sort{ |a, b| b.created_at.strftime("%s") <=> a.created_at.strftime("%s") }.drop(1).each do |photo|
+            %strong{:id => "caption"} #{photo.title}
+            <br>
+            %span= "#{photo.created_at.strftime("%d-%m-%Y , %H:%M:%S")}"
+            <br>
+            = image_tag photo.image.url(:medium), imageId:"#{photo.id}"
