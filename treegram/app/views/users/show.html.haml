@@ -81,7 +81,6 @@
     })
 
     $(".doubleClickAction").dblclick(function() {
-      console.log($(this).attr('id'))
       $.ajax({type: 'GET',
       url: `/users/${$(this).attr('userId')}/posts/${$(this).attr('id')}/delete`,
       timeout: 5000,
